@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        'use strict';
+
+        class Hamburger {
+            constructor(size, stuffing, toppings = '') {
+                this.size = size;
+                this.stuffing = stuffing;
+                this.toppings = [toppings];
+                this.result = [];
+                this.getSize(this.size);
+                this.getStuffing(this.stuffing);
+                this.getToppings(this.toppings);
+            }
+
+            // Добавить добавку
+            addTopping(value) {
+                this.toppings.push(value);
+            }
+
+            // Убрать добавку
+            removeTopping(value) {
+                for (let i = 0; i < this.result.length; i++) {
+                    if (this.result[i].topping == value) {
+                        this.result.splice(i, 1);
+                    }
+                }
+            }
+
+            // Получить список добавок
+            getToppings(value) {
+                const toppingList = [
+                    {topping: 'seasoning', price: 15, calories: 0},
+                    {topping: 'mayonnaise', price: 20, calories: 5},
+                ];
+                for (let i = 0; i < value.length; i++) {
+                    for (let j = 0; j < toppingList.length; j++) {
+                        if (value[i] == toppingList[j].topping) {
+                            this.result.push(toppingList[j]);
+                        }
+                    }
+                }
+                // Не успеваю придумать как проверить, что в this.result уже не содержится такой объект, поэтому
+                // добавки повторяются
+            }
+
+            // Узнать размер гамбургера
+            getSize(arg) {
+                const sizeList = [
+                    {size: 'small', price: 50, calories: 20},
+                    {size: 'big', price: 50, calories: 20},
+                ];
+                sizeList.map(value => {
+                    if (value.size == arg) {
+                        this.result.push(value);
+                    }
+                });
+            }
+
+            // Узнать начинку гамбургера
+            getStuffing(arg) {
+                const stuffingList = [
+                    {stuffing: 'cheese', price: 10, calories: 20},
+                    {stuffing: 'salad', price: 20, calories: 5},
+                    {stuffing: 'potato', price: 15, calories: 10},
+                ];
+                stuffingList.map(value => {
+                    if (value.stuffing == arg) {
+                        this.result.push(value);
+                    }
+                });
+            }
+            
+            // Узнать цену 
+            calculatePrice(arr) {
+                let sum = 0;
+                for (let value of arr) {
+                    sum += value.price;
+                }
+                console.log(`Стоимость: ${sum}`);
+            }
+
+            // Узнать калорийность
+            calculateCalories(arr) {
+                let sum = 0;
+                for (let value of arr) {
+                    sum += value.calories;
+                }
+                console.log(`Калорийность: ${sum}`);
+            }
+
+            calculate() {
+                this.getToppings(this.toppings);
+                this.calculatePrice(this.result);
+                this.calculateCalories(this.result);
+            }
+        }
+
+        const hamburger = new Hamburger('big', 'potato', 'seasoning');
+        hamburger.calculate();
+        console.log(hamburger);       
+        
+    </script>
+</body>
+</html>
